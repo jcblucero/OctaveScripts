@@ -1,0 +1,6 @@
+tr -cd '[^\,\.\:\t\r\n\x00-\x7F]' < RTTLogger_Channel_Terminal.log > newfile
+tr -s '\n' < newfile > newfile2
+
+-----
+tr -cd '[^\,\.\:\t\r\n[:print:]]' < RTTLogger_Channel_Terminal.log > newfile_v2
+tr -s '\n' < newfile > newfile2
