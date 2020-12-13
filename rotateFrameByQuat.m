@@ -24,6 +24,11 @@
 
 #https://www.mathworks.com/help/fusion/ug/rotations-orientation-and-quaternions.html
 # conj(q) * Vquat * q
-function retval = rotateFrameByQuat (input1, input2)
-
+function retval = rotateFrameByQuat (quat_array, frame_vector)
+  pkg load quaternion
+  frame_quat = quaternion(0,frame_vector(1),frame_vector(2),frame_vector(3));
+  #frame_quat = quaternion(0,0,0,1);
+  quat = quaternion(quat_array(4),quat_array(1),quat_array(2),quat_array(3));
+  
+  retval = conj(quat) * frame_quat * quat;
 endfunction

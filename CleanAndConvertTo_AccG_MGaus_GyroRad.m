@@ -40,8 +40,8 @@ linacc_x_col = 18;
 acceleration_scale_factor = 0.00048828125;
 gravity_to_meter_second_sq = 9.80665;
 accel_meter_second_sq_factor = gravity_to_meter_second_sq  * acceleration_scale_factor;
-magnetomoeter_scale_factor =	0.03051757813; 
-gyro_scale_factor =	0.1525878906; 
+magnetomoeter_scale_factor =	0.03051757813 * 0.01; #convert from uT to Gauss
+gyro_scale_factor =	0.1525878906; #convert from degrees/s to rad/s
 
 #acc_x = cleaned_data(:,acc_x_col) * 0.00048828125;
 #Convert 16 bit counts from sensors to units (
@@ -72,4 +72,12 @@ fclose(fid);
 #cell2csv(output_file_name,headers);
 #csvwrite(output_file_name,headers,"append","on");
 csvwrite(output_file_name,output_data,"append","on");
+
+%%For Madgwick Matlab data conversions
+Accelerometer = accel_x_y_z;
+Magnetometer = mag_x_y_z;
+Gyroscope = gyro_x_y_z;
+time = (1:length(atime))';
+time = time * 0.0015; #sampled every 1.5ms
+save("madgwick_alg_data_rad.mat","Accelerometer","Magnetometer","Gyroscope","time");
 
