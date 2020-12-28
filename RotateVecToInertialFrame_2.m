@@ -25,7 +25,7 @@
 #rotates a 3d vector (x,y,z) from body frame to inertial frame (earth) using quaternion
 #quaternion is converted to rotation matrix, then matrix multiplied by vector
 #Quaternion is given scalar first, (w,x,y,z) == (a,b,c,d)
-function retval = RotateGravityToBodyFrame(quaternion)
+function retval = RotateVecToInertialFrame_2(vec, quaternion)
 
   %rotation_matrix = [
   %  2*a_sq-1+2*b_sq, 2*(bc-ad), 2*(bd+ac);
@@ -34,29 +34,26 @@ function retval = RotateGravityToBodyFrame(quaternion)
     
   #Rotation matrix from inertial to body
   q = quaternion;
-  R(1,1,:) = 2.*q(:,1).^2-1+2.*q(:,2).^2;
+  #R(1,1,:) = 2.*q(:,1).^2-1+2.*q(:,2).^2;
+  R(1,1,:) = q(:,1).^2+q(:,2).^2-q(:,3).^2-q(:,4).^2;
   R(1,2,:) = 2.*(q(:,2).*q(:,3)+q(:,1).*q(:,4));
   R(1,3,:) = 2.*(q(:,2).*q(:,4)-q(:,1).*q(:,3));
   R(2,1,:) = 2.*(q(:,2).*q(:,3)-q(:,1).*q(:,4));
-  R(2,2,:) = 2.*q(:,1).^2-1+2.*q(:,3).^2;
+  #R(2,2,:) = 2.*q(:,1).^2-1+2.*q(:,3).^2;
+  R(2,2,:) = q(:,1).^2-q(:,2).^2+q(:,3).^2-q(:,4).^2;
   R(2,3,:) = 2.*(q(:,3).*q(:,4)+q(:,1).*q(:,2));
+  #R(2,3,:) = 2.*(q(:,3).*q(:,4)+q(:,1).*q(:,3)); #bad, double y from sentral data sheet
   R(3,1,:) = 2.*(q(:,2).*q(:,4)+q(:,1).*q(:,3));
   R(3,2,:) = 2.*(q(:,3).*q(:,4)-q(:,1).*q(:,2));
-  R(3,3,:) = 2.*q(:,1).^2-1+2.*q(:,4).^2;
-##  R(1,1,:) = 2.*q(:,1).^2-1+2.*q(:,2).^2;
-##  R(1,2,:) = 2.*(q(:,2).*q(:,3)-q(:,1).*q(:,4));
-##  R(1,3,:) = 2.*(q(:,2).*q(:,4)+q(:,1).*q(:,3));
-##  R(2,1,:) = 2.*(q(:,2).*q(:,3)+q(:,1).*q(:,4));
-##  R(2,2,:) = 2.*q(:,1).^2-1+2.*q(:,3).^2;
-##  R(2,3,:) = 2.*(q(:,3).*q(:,4)-q(:,1).*q(:,2));
-##  R(3,1,:) = 2.*(q(:,2).*q(:,4)-q(:,1).*q(:,3));
-##  R(3,2,:) = 2.*(q(:,3).*q(:,4)+q(:,1).*q(:,2));
-##  R(3,3,:) = 2.*q(:,1).^2-1+2.*q(:,4).^2;
-  vec = [0,0,1];
+  #R(3,2,:) = 2.*(q(:,3).*q(:,4)-q(:,1).*q(:,3)); #bad, double y from setnral data sheet
+  #R(3,3,:) = 2.*q(:,1).^2-1+2.*q(:,4).^2;
+  R(3,3,:) = q(:,1).^2-q(:,2).^2-q(:,3).^2+q(:,4).^2;
+  
+  #vec = [0,0,1];
       
   #retval = R * vec;
   for i = 1:length(R(1,1,:))
-    retval(i,:) = (R(:,:,i) * vec')';
+    retval(i,:) = (R(:,:,i) * vec(i,:)')';
   endfor
 
 endfunction

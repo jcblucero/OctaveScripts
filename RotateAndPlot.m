@@ -19,37 +19,37 @@ inertial_accel_minus_g_2 = RotateVecToInertialFrame(body_accel_minus_grav,q);
 
 
 
-#scatter
+#plot
 figure('Name', 'Sensor Data');
 axis(1) = subplot(3,1,1);
 hold on;
-scatter(time, inertial_accel(:,1), 'r');
-scatter(time, inertial_accel(:,2), 'g');
-scatter(time, inertial_accel(:,3), 'b');
+plot(time, inertial_accel(:,1), 'r');
+plot(time, inertial_accel(:,2), 'g');
+plot(time, inertial_accel(:,3), 'b');
 legend('X', 'Y', 'Z');
 xlabel('Time (s)');
 ylabel('Acceleration (g)');
 title('Accelerometer Rotated');
 hold off;
 
-#scatter
+#plot
 axis(2) = subplot(3,1,2);
 hold on;
-scatter(time, inertial_accel_minus_g(:,1), 'r');
-scatter(time, inertial_accel_minus_g(:,2), 'g');
-scatter(time, inertial_accel_minus_g(:,3), 'b');
+plot(time, inertial_accel_minus_g(:,1), 'r');
+plot(time, inertial_accel_minus_g(:,2), 'g');
+plot(time, inertial_accel_minus_g(:,3), 'b');
 legend('X', 'Y', 'Z');
 xlabel('Time (s)');
 ylabel('Acceleration (g)');
 title('Accelerometer Minus Gravity');
 hold off;
 
-#scatter
+#plot
 ##axis(1) = subplot(3,1,3);
 ##hold on;
-##scatter(time, inertial_accel_minus_g_2(:,1), 'r');
-##scatter(time, inertial_accel_minus_g_2(:,2), 'g');
-##scatter(time, inertial_accel_minus_g_2(:,3), 'b');
+##plot(time, inertial_accel_minus_g_2(:,1), 'r');
+##plot(time, inertial_accel_minus_g_2(:,2), 'g');
+##plot(time, inertial_accel_minus_g_2(:,3), 'b');
 ##legend('X', 'Y', 'Z');
 ##xlabel('Time (s)');
 ##ylabel('Acceleration (g)');
@@ -58,9 +58,9 @@ hold off;
 
 axis(3) = subplot(3,1,3);
 hold on;
-scatter(time, gyro_x_y_z(:,1), 'r');
-scatter(time, gyro_x_y_z(:,2), 'g');
-scatter(time, gyro_x_y_z(:,3), 'b');
+plot(time, gyro_x_y_z(:,1), 'r');
+plot(time, gyro_x_y_z(:,2), 'g');
+plot(time, gyro_x_y_z(:,3), 'b');
 legend('X', 'Y', 'Z');
 xlabel('Time (s)');
 ylabel('Angular rate (deg/s)');

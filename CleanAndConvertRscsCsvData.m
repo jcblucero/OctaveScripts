@@ -7,6 +7,8 @@
   #qx,qy,qz,qw,qtime,mx,my,mz,mtime,ax,ay,az,atime,gyrox,gyroy,gyroz,gyrotime,linax,linay,linaz
 
  csv_data = csvread('RTTLogger_Channel_Terminal_STRIPPED_VER2.csv');
+ #csv_data = csvread('t1_on_desk_pitch.csv');
+ #csv_data = csvread('t3_pitch_moving.csv');
  
  #First row is headers, which octave won't read
  #second row is bad data for whatever reason
