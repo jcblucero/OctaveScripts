@@ -71,6 +71,28 @@ accel_at_rest = accel_norm < a_thresh;
 both_at_rest = gyro_at_rest & accel_at_rest;
 #######################
 
+## State Machine ##
+gait_state = 0;
+gait_state_series = zeros(length(gyro_at_rest));
+for i = 1:length(gyro_at_rest)
+  #if initial contact, state is 1
+  if initial_contact(i)
+    gait_state = 1;
+  #if at rest and initial contact has happend, move to state 2
+  elseif (gyro_at_rest(i) && (gait_state>=1))
+    gait_state = 2;
+  #stay in state 2 (rest) until threshold exceeded
+  elseif  (gait_state==2) && not(gyro_at_rest(i))
+    gait_state = 0;
+  else
+    gait_state = gait_state;
+  endif
+  
+  gait_state_series(i) = gait_state;
+end
+
+###################
+
 #scatter
 figure('Name', 'Sensor Data');
 axis(1) = subplot(4,1,1);
@@ -113,7 +135,7 @@ axis(4) = subplot(4,1,4);
 hold on;
 plot(x_axis_plot, gyro_at_rest(:,1), 'r');
 plot(x_axis_plot, initial_contact(:,1), 'g');
-#plot(x_axis_plot, both_at_rest(:,1), 'b');
+plot(x_axis_plot, gait_state_series(:,1), 'b');
 #legend('X', 'Y', 'Z');
 xlabel('Time (s)');
 ylabel('State');
