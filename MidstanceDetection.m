@@ -97,9 +97,9 @@ end
 figure('Name', 'Sensor Data');
 axis(1) = subplot(4,1,1);
 hold on;
-plot(x_axis_plot, jerk_norm(:,1), 'r');
-#plot(x_axis_plot, jerk_norm(:,2), 'g');
-#plot(x_axis_plot, jerk_norm(:,3), 'b');
+plot(x_axis_plot, inertial_accel_minus_g_1(:,1), 'r');
+plot(x_axis_plot, inertial_accel_minus_g_1(:,2), 'g');
+plot(x_axis_plot, inertial_accel_minus_g_1(:,3), 'b');
 #plot(time, gyro_delta_2(:), 'k');
 legend('X', 'Y', 'Z');
 xlabel('Time (s)');
